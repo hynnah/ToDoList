@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ToDoList.MainPage"
+             Title="My To-Do List"
+             BackgroundColor="#F5F5F5">
+
+    <VerticalStackLayout Spacing="10" VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Padding="15">
+        
+        <!-- Header -->
+        <Label Text="My To-Do List" 
+               FontSize="28" 
+               FontAttributes="Bold" 
+               TextColor="#333333"
+               HorizontalTextAlignment="Center"
+               Margin="0,10,0,20"/>
+
+        <!-- Input Section -->
+        <Frame CornerRadius="10" 
+               Padding="15" 
+               BorderColor="#DDDDDD" 
+               HasShadow="True"
+               Margin="0,0,0,10">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Add New Task" 
+                       FontSize="16" 
+                       FontAttributes="Bold" 
+                       TextColor="#333333"/>
+                
+                <Entry x:Name="titleEntry" 
+                       Placeholder="Task Title" 
+                       PlaceholderColor="#999999" 
+                       TextColor="#333333" 
+                       FontSize="14"
+                       Keyboard="Text" 
+                       ReturnType="Next" 
+                       MaxLength="50"/>
+                
+                <Editor x:Name="detailsEditor" 
+                        Placeholder="Task Details (Optional)" 
+                        PlaceholderColor="#999999" 
+                        TextColor="#333333" 
+                        FontSize="14"
+                        MaxLength="240" 
+                        HeightRequest="80"/>
+                
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                    <Button x:Name="addBtn" 
+                            IsVisible="True" 
+                            Text="Add Task" 
+                            TextColor="White" 
+                            BackgroundColor="#4CAF50" 
+                            FontAttributes="Bold"
+                            Clicked="AddToDoItem"
+                            Grid.Column="0"/>
+                    
+                    <Button x:Name="editBtn" 
+                            IsVisible="False" 
+                            Text="Update" 
+                            TextColor="White" 
+                            BackgroundColor="#2196F3" 
+                            FontAttributes="Bold"
+                            Clicked="EditToDoItem"
+                            Grid.Column="1"/>
+                    
+                    <Button x:Name="cancelBtn" 
+                            IsVisible="False" 
+                            Text="Cancel" 
+                            TextColor="White" 
+                            BackgroundColor="#F44336" 
+                            FontAttributes="Bold"
+                            Clicked="CancelEdit"
+                            Grid.Column="2"/>
+                </Grid>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Tasks List -->
+        <Label Text="Your Tasks" 
+               FontSize="18" 
+               FontAttributes="Bold" 
+               TextColor="#333333"/>
+
+        <ListView x:Name="todoLV" 
+                  HorizontalOptions="Fill" 
+                  VerticalOptions="FillAndExpand" 
+                  HasUnevenRows="True"
+                  SeparatorVisibility="Default" 
+                  SeparatorColor="#EEEEEE"
+                  BackgroundColor="Transparent"
+                  ItemSelected="TodoLV_OnItemSelected"
+                  ItemTapped="todoLV_ItemTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame CornerRadius="8" 
+                               Padding="12" 
+                               BorderColor="#E0E0E0" 
+                               HasShadow="True"
+                               Margin="0,5">
+                            <Grid VerticalOptions="FillAndExpand" 
+                                  RowSpacing="8" 
+                                  HorizontalOptions="FillAndExpand" 
+                                  ColumnDefinitions="*,50">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Row="0" 
+                                       Grid.Column="0" 
+                                       LineBreakMode="TailTruncation" 
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       Text="{Binding title}" 
+                                       VerticalOptions="Center" 
+                                       HorizontalOptions="Start"
+                                       TextColor="#333333"/>
+
+                                <Label Grid.Row="1" 
+                                       Grid.Column="0" 
+                                       LineBreakMode="WordWrap" 
+                                       FontSize="13"
+                                       Text="{Binding detail}" 
+                                       VerticalOptions="Center" 
+                                       HorizontalOptions="Start"
+                                       TextColor="#666666"
+                                       Opacity="0.7"/>
+
+                                <Button Grid.Row="0" 
+                                        Grid.RowSpan="2" 
+                                        Grid.Column="1"
+                                        Text="🗑️" 
+                                        FontSize="20"
+                                        BackgroundColor="Transparent" 
+                                        ClassId="{Binding id}"
+                                        Padding="5"
+                                        Clicked="DeleteToDoItem"/>
+                            </Grid>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </VerticalStackLayout>
+
+</ContentPage>
