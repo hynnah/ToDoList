@@ -2,64 +2,63 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ToDoList.MainPage"
-             Title="My To-Do List"
-             BackgroundColor="#F5F5F5">
+             Title="Tasks"
+             BackgroundColor="#F5F1ED">
 
-    <VerticalStackLayout Spacing="10" VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Padding="15">
+    <Grid RowDefinitions="Auto,*" VerticalOptions="FillAndExpand">
         
         <!-- Header -->
-        <Label Text="My To-Do List" 
-               FontSize="28" 
-               FontAttributes="Bold" 
-               TextColor="#333333"
-               HorizontalTextAlignment="Center"
-               Margin="0,10,0,20"/>
+        <VerticalStackLayout Grid.Row="0" Padding="20,16,20,20" Spacing="4" BackgroundColor="#FAF7F4">
+            <Label Text="Tasks" 
+                   FontSize="28" 
+                   FontAttributes="Bold" 
+                   TextColor="#3d3430"/>
+            <Label Text="Organize your work" 
+                   FontSize="12" 
+                   TextColor="#9d8b7e"/>
+        </VerticalStackLayout>
 
-        <!-- Input Section -->
-        <Frame CornerRadius="10" 
-               Padding="15" 
-               BorderColor="#DDDDDD" 
-               HasShadow="True"
-               Margin="0,0,0,10">
-            <VerticalStackLayout Spacing="10">
-                <Label Text="Add New Task" 
-                       FontSize="16" 
-                       FontAttributes="Bold" 
-                       TextColor="#333333"/>
+        <!-- Main Content -->
+        <VerticalStackLayout Grid.Row="1" Spacing="0" Padding="0">
+            
+            <!-- Input Area -->
+            <VerticalStackLayout Padding="16,16,16,16" Spacing="10" BackgroundColor="#FEFCF9" Margin="0,8,0,0">
                 
                 <Entry x:Name="titleEntry" 
-                       Placeholder="Task Title" 
-                       PlaceholderColor="#999999" 
-                       TextColor="#333333" 
+                       Placeholder="Enter task" 
+                       PlaceholderColor="#c4b5a8" 
+                       TextColor="#3d3430" 
                        FontSize="14"
                        Keyboard="Text" 
                        ReturnType="Next" 
-                       MaxLength="50"/>
+                       MaxLength="50"
+                       BackgroundColor="#F9F6F2"/>
                 
                 <Editor x:Name="detailsEditor" 
-                        Placeholder="Task Details (Optional)" 
-                        PlaceholderColor="#999999" 
-                        TextColor="#333333" 
-                        FontSize="14"
+                        Placeholder="Details" 
+                        PlaceholderColor="#c4b5a8" 
+                        TextColor="#3d3430" 
+                        FontSize="13"
                         MaxLength="240" 
-                        HeightRequest="80"/>
+                        HeightRequest="65"
+                        BackgroundColor="#F9F6F2"/>
                 
-                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="6" Margin="0,4,0,0">
                     <Button x:Name="addBtn" 
                             IsVisible="True" 
-                            Text="Add Task" 
+                            Text="Add" 
                             TextColor="White" 
-                            BackgroundColor="#4CAF50" 
-                            FontAttributes="Bold"
+                            BackgroundColor="#b8956e"
+                            FontSize="13"
                             Clicked="AddToDoItem"
                             Grid.Column="0"/>
                     
                     <Button x:Name="editBtn" 
                             IsVisible="False" 
-                            Text="Update" 
+                            Text="Save" 
                             TextColor="White" 
-                            BackgroundColor="#2196F3" 
-                            FontAttributes="Bold"
+                            BackgroundColor="#c4a487"
+                            FontSize="13"
                             Clicked="EditToDoItem"
                             Grid.Column="1"/>
                     
@@ -67,81 +66,56 @@
                             IsVisible="False" 
                             Text="Cancel" 
                             TextColor="White" 
-                            BackgroundColor="#F44336" 
-                            FontAttributes="Bold"
+                            BackgroundColor="#a89077"
+                            FontSize="13"
                             Clicked="CancelEdit"
                             Grid.Column="2"/>
                 </Grid>
             </VerticalStackLayout>
-        </Frame>
 
-        <!-- Tasks List -->
-        <Label Text="Your Tasks" 
-               FontSize="18" 
-               FontAttributes="Bold" 
-               TextColor="#333333"/>
-
-        <ListView x:Name="todoLV" 
-                  HorizontalOptions="Fill" 
-                  VerticalOptions="FillAndExpand" 
-                  HasUnevenRows="True"
-                  SeparatorVisibility="Default" 
-                  SeparatorColor="#EEEEEE"
-                  BackgroundColor="Transparent"
-                  ItemSelected="TodoLV_OnItemSelected"
-                  ItemTapped="todoLV_ItemTapped">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Frame CornerRadius="8" 
-                               Padding="12" 
-                               BorderColor="#E0E0E0" 
-                               HasShadow="True"
-                               Margin="0,5">
-                            <Grid VerticalOptions="FillAndExpand" 
-                                  RowSpacing="8" 
-                                  HorizontalOptions="FillAndExpand" 
-                                  ColumnDefinitions="*,50">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <Label Grid.Row="0" 
-                                       Grid.Column="0" 
-                                       LineBreakMode="TailTruncation" 
-                                       FontSize="16"
+            <!-- Tasks List -->
+            <ListView x:Name="todoLV" 
+                      HorizontalOptions="Fill" 
+                      VerticalOptions="FillAndExpand" 
+                      HasUnevenRows="True"
+                      SeparatorVisibility="None"
+                      BackgroundColor="#F5F1ED"
+                      ItemSelected="TodoLV_OnItemSelected"
+                      ItemTapped="todoLV_ItemTapped"
+                      Margin="0,8,0,0">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <VerticalStackLayout Padding="16,12,16,12" Spacing="6" BackgroundColor="#FEFCF9" Margin="8,4,8,4">
+                                
+                                <Label LineBreakMode="TailTruncation" 
+                                       FontSize="15"
                                        FontAttributes="Bold"
                                        Text="{Binding title}" 
-                                       VerticalOptions="Center" 
-                                       HorizontalOptions="Start"
-                                       TextColor="#333333"/>
+                                       VerticalOptions="Center"
+                                       TextColor="#3d3430"/>
 
-                                <Label Grid.Row="1" 
-                                       Grid.Column="0" 
-                                       LineBreakMode="WordWrap" 
-                                       FontSize="13"
+                                <Label LineBreakMode="WordWrap" 
+                                       FontSize="12"
                                        Text="{Binding detail}" 
-                                       VerticalOptions="Center" 
-                                       HorizontalOptions="Start"
-                                       TextColor="#666666"
-                                       Opacity="0.7"/>
+                                       VerticalOptions="Center"
+                                       TextColor="#7d6d60"/>
 
-                                <Button Grid.Row="0" 
-                                        Grid.RowSpan="2" 
-                                        Grid.Column="1"
-                                        Text="🗑️" 
-                                        FontSize="20"
-                                        BackgroundColor="Transparent" 
+                                <Button Text="Remove"
+                                        FontSize="11"
+                                        TextColor="#c8704f"
+                                        BackgroundColor="Transparent"
                                         ClassId="{Binding id}"
-                                        Padding="5"
-                                        Clicked="DeleteToDoItem"/>
-                            </Grid>
-                        </Frame>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </VerticalStackLayout>
+                                        Clicked="DeleteToDoItem"
+                                        HorizontalOptions="Start"/>
+                            </VerticalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </VerticalStackLayout>
+
+    </Grid>
 
 </ContentPage>
