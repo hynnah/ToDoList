@@ -7,7 +7,7 @@
 
     <Grid RowDefinitions="Auto,*" VerticalOptions="FillAndExpand">
         
-        <!-- Header -->
+        <!-- header -->
         <VerticalStackLayout Grid.Row="0" Padding="20,16,20,20" Spacing="4" BackgroundColor="#FAF7F4">
             <Label Text="Tasks" 
                    FontSize="28" 
@@ -18,10 +18,10 @@
                    TextColor="#9d8b7e"/>
         </VerticalStackLayout>
 
-        <!-- Main Content -->
+        <!-- main Content -->
         <VerticalStackLayout Grid.Row="1" Spacing="0" Padding="0">
             
-            <!-- Input Area -->
+            <!-- input Area -->
             <VerticalStackLayout Padding="16,16,16,16" Spacing="10" BackgroundColor="#FEFCF9" Margin="0,8,0,0">
                 
                 <Entry x:Name="titleEntry" 
